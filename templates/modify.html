@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modify Contact Form</title>
+</head>
+<body>
+<form action="modifysubmit" method="POST">
+    {%csrf_token%}
+    <h2>MODIFY CONTACT FORM</h2>
+    <h3>Contact</h3>
+    <input type="hidden" name="contact_id" value="{{personalInfo.contact.contact_id}}">
+    First Name: <input type="text" name="fname" value="{{personalInfo.contact.fname}}"><br>
+    Middle Name: <input type="text" name="mname" value="{{personalInfo.contact.mname}}"><br>
+    Last Name: <input type="text" name="lname" value="{{personalInfo.contact.lname}}"><br>
+    <h3>Address List</h3>
+    <div id="address-div-id">
+        {%for address in personalInfo.addressList%}
+            <input type="hidden" name="address_id" value="{{address.address_id}}">
+            Type of Address: <input type="text" name="address_type" value="{{address.address_type}}"><br>
+            Street Address: <input type="text" name="address" value="{{address.address}}"><br>
+            City: <input type="text" name="city" value="{{address.city}}"><br>
+            State: <input type="text" name="state" value="{{address.state}}"><br>
+            Zipcode: <input type="text" name="zip" value="{{address.zip}}"><br>
+            <br>
+        {%endfor%}
+    </div>
+    <button type="button" class="button" onclick="addAddress()" id="add-address-button">Add Another Address</button>
+     <script>
+        function addAddress() {
+          var div = document.createElement("div");
+          div.innerHTML = 'Type of Address: <input type="text" name="address_type"><br>Street Address: <input type="text" name="address"><br>City: <input type="text" name="city"><br>State: <input type="text" name="state"><br>Zipcode: <input type="text" name="zip"><br><br>';
+          document.getElementById("address-div-id").appendChild(div);
+        }
+        function addPhone() {
+          var div = document.createElement("div");
+          div.innerHTML = 'Type of Number: <input type="text" name="phone_type"><br>Area Code: <input type="text" name="area_code"><br>Number: <input type="text" name="number"><br><br>';
+          document.getElementById("phone-div-id").appendChild(div);
+        }
+        function addDate() {
+          var div = document.createElement("div");
+          div.innerHTML = 'Type of Date: <input type="text" name="date_type"><br>Date: <input type="date" name="date"><br><br>';
+          document.getElementById("date-div-id").appendChild(div);
+        }
+    </script>
+    <h3>Phone Number List</h3>
+    <div id="phone-div-id">
+        {%for phone in personalInfo.phoneList%}
+            <input type="hidden" name="phone_id" value="{{phone.phone_id}}">
+            Type of Number: <input type="text" name="phone_type" value="{{phone.phone_type}}"><br>
+            Area Code: <input type="text" name="area_code" value="{{phone.area_code}}"><br>
+            Number: <input type="text" name="number" value="{{phone.number}}"><br>
+            <br>
+        {%endfor%}
+    </div>
+    <button type="button" class="button" onclick="addPhone()" id="add-phone-button">Add Another Phone Number</button>
+    <h3>Date List</h3>
+    <div id="date-div-id">
+        {%for date in personalInfo.dateList%}
+            <input type="hidden" name="date_id" value="{{date.date_id}}">
+            Type of Date: <input type="text" name="date_type" value="{{date.date_type}}"><br>
+            Date: <input type="date" name="date" value="{{date.date|date:'Y-m-d'}}"><br>
+            <br>
+        {%endfor%}
+    </div>
+    <button type="button" class="button" onclick="addDate()" id="add-date-button">Add Another Date</button>
+    <input type="submit">
+</form>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Contact Form</title>
+    <style>
+        .button {
+          background-color: #72bcd4;
+          border: true;
+          color: white;
+          padding: 0px 15px;
+          text-align: center;
+          font-size: 15px;
+          cursor: pointer;
+        }
+        .button:hover {
+          background-color: green;
+        }
+    </style>
+</head>
+<body>
+<form action="add" method="post">
+    {%csrf_token%}
+    <h2>ADD NEW CONTACT FORM</h2>
+    <h3>Contact</h3>
+    First Name: <input type="text" name="fname"><br>
+    Middle Name: <input type="text" name="mname"><br>
+    Last Name: <input type="text" name="lname"><br>
+    <h3>Address List</h3>
+    <div id="address-div-id">
+        Type of Address: <input type="text" name="address_type"><br>
+        Street Address: <input type="text" name="address"><br>
+        City: <input type="text" name="city"><br>
+        State: <input type="text" name="state"><br>
+        Zipcode: <input type="text" name="zip"><br><br>
+    </div>
+    <button type="button" class="button" onclick="addAddress()" id="add-address-button">Add Another Address</button>
+    <script>
+        function addAddress() {
+          var div = document.createElement("div");
+          div.innerHTML = 'Type of Address: <input type="text" name="address_type"><br>Street Address: <input type="text" name="address"><br>City: <input type="text" name="city"><br>State: <input type="text" name="state"><br>Zipcode: <input type="text" name="zip"><br><br>';
+          document.getElementById("address-div-id").appendChild(div);
+        }
+        function addPhone() {
+          var div = document.createElement("div");
+          div.innerHTML = 'Type of Number: <input type="text" name="phone_type"><br>Area Code: <input type="text" name="area_code"><br>Number: <input type="text" name="number"><br><br>';
+          document.getElementById("phone-div-id").appendChild(div);
+        }
+        function addDate() {
+          var div = document.createElement("div");
+          div.innerHTML = 'Type of Date: <input type="text" name="date_type"><br>Date: <input type="date" name="date"><br><br>';
+          document.getElementById("date-div-id").appendChild(div);
+        }
+    </script>
+    <h3>Phone Number List</h3>
+    <div id="phone-div-id">
+        Type of Number: <input type="text" name="phone_type"><br>
+        Area Code: <input type="text" name="area_code"><br>
+        Number: <input type="text" name="number"><br><br>
+    </div>
+    <button type="button" class="button" onclick="addPhone()" id="add-phone-button">Add Another Phone Number</button>
+    <h3>Date List</h3>
+    <div id="date-div-id">
+        Type of Date: <input type="text" name="date_type"><br>
+        Date: <input type="date" name="date"><br><br>
+    </div>
+    <button type="button" class="button" onclick="addDate()" id="add-date-button">Add Another Date</button><br>
+    <input type="submit">
+
+</form>
+</body>
+</html>

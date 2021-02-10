@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <style>
+        .row:after {
+          content: "";
+          display: table;
+          clear: both;
+        }
+    
+        .search-container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div align="center">
+        <h1>CONTACTS</h1>
+    </div>
+    <div class="search-container">
+        <div class="search-bar">
+            <form method="get">
+                <input type="text" id="search-input" type="text" name="search_input form-control" placeholder="Search..." value="{{query}}">
+                <button class="btn btn-info" type="submit">Submit</button>
+            </form>
+        </div>
+        <div style="margin-top: 10px;">
+            <form action="add" method="GET">
+                <button class="btn btn-info" type="submit">Add New Contact</button>
+            </form>
+
+        </div>
+    </div>
+    <div class="row" style="background-color: gray" >
+        <div class="col-md-3"><b>First Name</b></div>
+        <div class="col-md-3"><b>Middle Name</b></div>
+        <div class="col-md-3"><b>Last Name</b></div>
+    </div>
+    {% for personalInfo in personalInfoList%}
+    <div class="row" style="background-color:lightblue">
+        <div class="col-md-3">{{personalInfo.contact.fname}}</div>
+        <div class="col-md-3">{{personalInfo.contact.mname}}</div>
+        <div class="col-md-3">{{personalInfo.contact.lname}}</div>
+        <form action="{% url 'modify' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="contact_id" value="{{personalInfo.contact.contact_id}}">
+            <button class="btn btn-primary" style="margin: 15px" type="submit" name='modify'>Modify</button>
+        </form>
+        <form action="{% url 'delete' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="contact_id" value="{{personalInfo.contact.contact_id}}">
+            <button class="btn btn-danger" style="margin: 15px"type="submit" name='delete'>Delete</button>
+        </form>
+    </div>
+    <div style="background-color:#e8f4f8">
+        {% for address in personalInfo.addressList%}
+        <div class="row">
+            <div class="col-md-4"><b>Address ({{address.address_type}}):</b></div>
+            <div class="col-md-4"><b>Street :</b> {{address.address}}</div>
+            <div class="col-md-4"><b>City :</b> {{address.city}}</div>
+            <div class="col-md-4"><b>State :</b> {{address.state}}</div>
+            <div class="col-md-4"><b>Zipcode :</b> {{address.zip}}</div>
+        </div>
+        {%endfor%}
+        {% for phone in personalInfo.phoneList%}
+        <div class="row">
+            <div class="col-md-4"><b>Phone ({{phone.phone_type}}):</b></div>
+            <div class="col-md-4"><b>Area Code:</b> {{phone.area_code}}</div>
+            <div class="col-md-4"><b>Number:</b> {{phone.number}}</div>
+        </div>
+        {%endfor%}
+        {% for date in personalInfo.dateList%}
+        <div class="row">
+            <div class="col-md-4"><b>Date ({{date.date_type}}):</b></div>
+            <div class="col-md-4">{{date.date}}</div>
+        </div>
+        {%endfor%}
+    </div>
+    {%endfor%}
+</body>
+</html>
